@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/whole_entry"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/week_separator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"
+        android:layout_marginTop="@dimen/small_padding"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/day_separator"
+        style="@style/day_separator_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/week_separator"
+        android:paddingBottom="@dimen/small_padding"
+        android:paddingLeft="@dimen/small_padding"
+        android:paddingTop="@dimen/small_padding"
+        android:visibility="gone"
+        tools:text="Dinsdag 02.10.2018" />
+
+    <LinearLayout
+        android:id="@+id/time_room_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/day_separator"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/timeTV"
+            style="@style/hours_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/medium_padding"
+
+            tools:text="10:30 - 12:30" />
+
+        <TextView
+            android:id="@+id/roomTV"
+            style="@style/room_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/medium_padding"
+
+            tools:text="200A 00.225" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/titleTV"
+        style="@style/course_title_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/day_separator"
+        android:layout_toRightOf="@id/time_room_box"
+        android:paddingLeft="@dimen/small_padding"
+        android:paddingRight="@dimen/small_padding"
+
+        tools:text="Besturingssystemen: hoorcollege" />
+
+
+</RelativeLayout>

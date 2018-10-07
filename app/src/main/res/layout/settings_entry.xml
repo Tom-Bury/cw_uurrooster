@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/settings_whole_entry"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/settings_course_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Besturingssystemen ofzo"
+        style="@style/course_title_style"
+        android:layout_alignParentLeft="true"
+        android:layout_centerInParent="true"
+        android:layout_toLeftOf="@id/settings_course_id"
+        android:paddingLeft="@dimen/small_padding"
+        android:paddingTop="@dimen/small_padding"
+        android:paddingBottom="@dimen/small_padding"/>
+
+
+    <TextView
+        android:id="@+id/settings_course_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        tools:text="H205BE"
+        android:paddingRight="@dimen/small_padding"
+        android:paddingTop="@dimen/small_padding"
+        style="@style/room_style"/>
+
+
+</RelativeLayout>
