@@ -65,7 +65,7 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
             entry.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
         }
 
-        if (currEntry.isInThePast()) {
+        if (currEntry.isInThePast() && !currEntry.isToday()) {
             titleTV.setTextColor(ContextCompat.getColor(getContext(), R.color.grey_outdated_data));
         }
         else {
