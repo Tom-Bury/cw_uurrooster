@@ -26,6 +26,7 @@ public class RosterLoader extends AsyncTaskLoader {
     @Override
     public Object loadInBackground() {
         if (this.url == null) {
+            System.err.println("You can't load a URL that is null!");
             return null;
         }
 

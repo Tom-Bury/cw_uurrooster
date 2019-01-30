@@ -74,10 +74,17 @@ public class RosterEntry {
         Date today = calendar.getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
         String formattedDate = formatter.format(today);
+        if (getDate() == null) {
+            return false;
+        }
         return getDate().contains(formattedDate);
     }
 
     public boolean isInThePast() {
+        if (getDate() == null) {
+            return false;
+        }
+
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
 
         Calendar calendar = Calendar.getInstance();

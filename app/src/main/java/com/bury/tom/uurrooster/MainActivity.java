@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if (isConnected) {
             // Start the AsyncTask to fetch the earthquake data
+            System.out.println("You're connected!");
             getSupportLoaderManager().initLoader(0, null, this);
         } else {
             // Display no internet empty list message
@@ -94,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String result) {
 
+        System.out.println("This is the result from the loader: ");
+        System.out.println(result + "\n\n\n");
         ArrayList<SettingsCourseEntry> allCourses = HtmlRosterParser.fetchAllCourses(result, is2ndSemester());
         PreferencesUtils.addCoursesToPreferences(PreferencesUtils.PREFS_KEY_ALL_COURSES, allCourses, preferences);
 

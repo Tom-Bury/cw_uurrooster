@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
 
+    int prevDayInt = -1;
+
 
     public RosterEntryAdapter(@NonNull Context context, ArrayList<RosterEntry> entries) {
         super(context, 0, entries);
@@ -31,6 +33,11 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
         }
 
         RosterEntry currEntry = getItem(position);
+
+        if (currEntry == null) {
+            System.out.println("The entry is null...");
+            return listItemView;
+        }
 
         RelativeLayout entry = listItemView.findViewById(R.id.whole_entry);
 
@@ -50,7 +57,8 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
             daySeparatorTV.setVisibility(View.VISIBLE);
             daySeparatorTV.setText(currEntry.getDate());
 
-            if (currEntry.getDate().contains("Maandag") && position != 0) {
+
+            if (isNewWeek(currEntry.getDate()) && position != 0) {
                 weekSeparator.setVisibility(View.VISIBLE);
             }
         }
@@ -72,9 +80,47 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
             titleTV.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         }
 
-
-
         return listItemView;
     }
+
+
+
+    boolean isNewWeek(String currDate) {
+        int currDayInt = dateToDayInt(currDate);
+        if (currDayInt < prevDayInt) {
+            this.prevDayInt = currDayInt;
+            return true;
+        }
+        this.prevDayInt = currDayInt;
+        return false;
+    }
+
+    int dateToDayInt(String date) {
+        int space = date.indexOf(' ');
+        String dayName = date.substring(0, space);
+
+        int dayInt;
+        switch (dayName) {
+            case "Maandag":
+                dayInt = 0;
+                break;
+            case "Dinsdag":
+                dayInt = 1;
+                break;
+            case "Woensdag":
+                dayInt = 2;
+                break;
+            case "Donderdag":
+                dayInt = 3;
+                break;
+            case "Vrijdag":
+                dayInt = 4;
+                break;
+            default:
+                dayInt = -1;
+        }
+        return dayInt;
+    }
+
 
 }
