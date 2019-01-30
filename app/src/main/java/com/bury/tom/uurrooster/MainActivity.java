@@ -69,14 +69,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 TextView emptyList = findViewById(R.id.testTextView);
                 emptyList.setText("No internet & no saved data :c");
                 emptyList.setVisibility(View.VISIBLE);
-
             }
-
-
         }
-
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Display no internet empty list message
+        String oldData = PreferencesUtils.getSavedDataFromPreferences(preferences);
+
+        if (oldData != null) {
+            displayData(oldData);
+        } else {
+            TextView emptyList = findViewById(R.id.testTextView);
+            emptyList.setText("No internet & no saved data :c");
+            emptyList.setVisibility(View.VISIBLE);
+        }
+
+
+    }
 
     @NonNull
     @Override
@@ -132,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ArrayList<String> enrolledCourses = PreferencesUtils.getCourseIDs(PreferencesUtils.PREFS_KEY_MY_COURSES, preferences);
         ArrayList<String> allCoursesAgain = PreferencesUtils.getCourseIDs(PreferencesUtils.PREFS_KEY_ALL_COURSES, preferences);
 
-        if (enrolledCourses == null) {
+        if (enrolledCourses == null || enrolledCourses.size() == 0) {
             enrolledCourses = allCoursesAgain;
         }
 
