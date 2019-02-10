@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         PreferencesUtils.addDataToPreferences(result,preferences);
 
-        this.roster = HtmlRosterParser.formatData(result, enrolledCourses, is2ndSemester());
+        this.roster = HtmlRosterParser.formatData2(result, enrolledCourses, is2ndSemester());
         this.rosterEntryAdapter = new RosterEntryAdapter(this, this.roster);
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(this.rosterEntryAdapter);
@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             enrolledCourses = allCoursesAgain;
         }
 
-        this.roster = HtmlRosterParser.formatData(data, enrolledCourses, is2ndSemester());
+        this.roster = HtmlRosterParser.formatData2(data, enrolledCourses, is2ndSemester());
         this.rosterEntryAdapter = new RosterEntryAdapter(this, this.roster);
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(this.rosterEntryAdapter);

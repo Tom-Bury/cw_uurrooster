@@ -15,11 +15,13 @@ import java.util.ArrayList;
 
 public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
 
-    int prevDayInt = -1;
+    private ArrayList<RosterEntry> entries;
+
 
 
     public RosterEntryAdapter(@NonNull Context context, ArrayList<RosterEntry> entries) {
         super(context, 0, entries);
+        this.entries = entries;
     }
 
     @NonNull
@@ -53,12 +55,12 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
 
         weekSeparator.setVisibility(View.GONE);
 
-        if (currEntry.isFirstOfDay()) {
+        if (currEntry.isFirstOfDay() || position == 0) {
             daySeparatorTV.setVisibility(View.VISIBLE);
             daySeparatorTV.setText(currEntry.getDate());
 
 
-            if (isNewWeek(currEntry.getDate()) && position != 0) {
+            if (isNewWeek(position)) {
                 weekSeparator.setVisibility(View.VISIBLE);
             }
         }
@@ -80,22 +82,75 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
             titleTV.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         }
 
+        if (timeOverlap(position)) {
+            System.out.println("\nOVERLAP!");
+            timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+        }
+        else {
+            System.out.println("\nno overlap");
+            timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+        }
+
+
         return listItemView;
     }
 
 
 
-    boolean isNewWeek(String currDate) {
-        int currDayInt = dateToDayInt(currDate);
-        if (currDayInt < prevDayInt) {
-            this.prevDayInt = currDayInt;
-            return true;
+    boolean timeOverlap(int currPos) {
+        if (currPos == 0) {
+            return false;
         }
-        this.prevDayInt = currDayInt;
-        return false;
+        RosterEntry currEntry = getItem(currPos);
+        RosterEntry prevEntry = getItem(currPos - 1);
+
+
+
+
+        if (currPos < this.entries.size() - 1) {
+            RosterEntry nextEntry = getItem(currPos + 1);
+            System.out.println("\n");
+            System.out.println("prev: " + prevEntry.toString());
+            System.out.println("curr: " + currEntry.toString());
+            System.out.printf("next: " + nextEntry.toString());
+            return currEntry.overlapsWith(prevEntry) || currEntry.overlapsWith(nextEntry);
+        }
+        else {
+            System.out.println("\n");
+            System.out.println("prev: " + prevEntry.toString());
+            System.out.println("curr: " + currEntry.toString());
+            return currEntry.overlapsWith(prevEntry);
+        }
+    }
+
+
+    boolean isNewWeek(int currPos) {
+
+        if (currPos == 0) {
+            return false;
+        }
+        else {
+            RosterEntry currEntry = getItem(currPos);
+            RosterEntry prevEntry = getItem(currPos - 1);
+
+            String currDate = currEntry.getDate();
+            String prevDate = prevEntry.getDate();
+
+            if (dateToDayInt(currDate) < dateToDayInt(prevDate)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
     }
 
     int dateToDayInt(String date) {
+        if (date == null) {
+            return -1;
+        }
+
         int space = date.indexOf(' ');
         String dayName = date.substring(0, space);
 

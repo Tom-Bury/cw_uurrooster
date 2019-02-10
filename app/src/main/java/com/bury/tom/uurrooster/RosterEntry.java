@@ -41,12 +41,12 @@ public class RosterEntry {
         return room;
     }
 
-    public String getStartingTime() {
-        return startingTime;
+    public Time getStartingTime() {
+        return new Time(startingTime);
     }
 
-    public String getEndingTime() {
-        return endingTime;
+    public Time getEndingTime() {
+        return new Time(endingTime);
     }
 
     public String getDate() {
@@ -108,6 +108,8 @@ public class RosterEntry {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
+        result.append(date);
+        result.append(" | ");
         result.append(startingTime);
         result.append("-");
         result.append(endingTime);
@@ -117,4 +119,43 @@ public class RosterEntry {
         result.append(room);
         return result.toString();
     }
+
+//    boolean overlapsWith(RosterEntry other) {
+//        if (other.getDate() != this.getDate()) {
+//            return false;
+//        }
+//
+//        if (this.getEndingHour() < other.getStartingHour() ||
+//            other.getEndingHour() < this.getStartingHour() ||
+//            this.getEndingTime() == other.getStartingTime() ||
+//            other.getEndingTime() == this.getStartingTime()) {
+//            return false;
+//        }
+//        else {
+//            return true;
+//        }
+//    }
+
+    boolean overlapsWith(RosterEntry other) {
+        if (other.getDate() != this.getDate()) {
+            return false;
+        }
+//        System.out.println("\n");
+//        System.out.println("this start: " + this.getStartingTime().toString());
+//        System.out.println("this end: " + this.getEndingTime().toString());
+//        System.out.println("other start: " + other.getStartingTime().toString());
+//        System.out.println("other end: " + other.getEndingTime().toString());
+
+
+        if (this.getEndingTime().isBefore(other.getStartingTime()) ||
+            other.getEndingTime().isBefore(this.getStartingTime())) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
+
+
 }
