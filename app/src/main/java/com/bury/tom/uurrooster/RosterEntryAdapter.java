@@ -68,12 +68,6 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
             daySeparatorTV.setVisibility(View.GONE);
         }
 
-        if (currEntry.isToday()) {
-            entry.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        }
-        else {
-            entry.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-        }
 
         if (currEntry.isInThePast() && !currEntry.isToday()) {
             titleTV.setTextColor(ContextCompat.getColor(getContext(), R.color.grey_outdated_data));
@@ -82,15 +76,28 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
             titleTV.setTextColor(ContextCompat.getColor(getContext(), R.color.black));
         }
 
-        if (timeOverlap(position)) {
-            System.out.println("\nOVERLAP!");
-            timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+
+
+        if (currEntry.isToday()) {
+            entry.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+
+            if (timeOverlap(position)) {
+                timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+            }
+            else {
+                timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+            }
         }
         else {
-            System.out.println("\nno overlap");
-            timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
-        }
+            entry.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
 
+            if (timeOverlap(position)) {
+                timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.red));
+            }
+            else {
+                timeTV.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.white));
+            }
+        }
 
         return listItemView;
     }
@@ -109,16 +116,16 @@ public class RosterEntryAdapter extends ArrayAdapter<RosterEntry> {
 
         if (currPos < this.entries.size() - 1) {
             RosterEntry nextEntry = getItem(currPos + 1);
-            System.out.println("\n");
-            System.out.println("prev: " + prevEntry.toString());
-            System.out.println("curr: " + currEntry.toString());
-            System.out.printf("next: " + nextEntry.toString());
+//            System.out.println("\n");
+//            System.out.println("prev: " + prevEntry.toString());
+//            System.out.println("curr: " + currEntry.toString());
+//            System.out.printf("next: " + nextEntry.toString());
             return currEntry.overlapsWith(prevEntry) || currEntry.overlapsWith(nextEntry);
         }
         else {
-            System.out.println("\n");
-            System.out.println("prev: " + prevEntry.toString());
-            System.out.println("curr: " + currEntry.toString());
+//            System.out.println("\n");
+//            System.out.println("prev: " + prevEntry.toString());
+//            System.out.println("curr: " + currEntry.toString());
             return currEntry.overlapsWith(prevEntry);
         }
     }
